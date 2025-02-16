@@ -9,6 +9,6 @@ Este es un clásico juego de Pieda, Papel o Tijera desarrollado en Phyton, dise�
 1. Contra la computadora: El usuario elige una opción y la computadora genera una aleatoria.
 2. Multijugador: Dos jugadores ingresan sus elecciones sin mostrar en pantalla hasta revelar el resultado.
 3. Ver estadisticas: Muestra las partidas jugadas y las estadisticas acumuladas.
-# Instrucciones de intalacion 
+## Instrucciones de intalacion 
 - Requisitos: Python versión 3.12.7
 - librerías necesarias:  
