@@ -1,2 +1,11 @@
-# Juego-priedra-papel-tijera
-Este es un clásico juego de Pieda, Papel o Tijera  diseñado para ofrecer una experiencia fluida y entretenida . 
+# Juego Piedra, Papel o Tijera 🪨📄✂
+Este es un clásico juego de Pieda, Papel o Tijera  diseñado para ofrecer una experiencia fluida y entretenida. Permite jugar contra la computadora o en modo multijugador.
+## Reglas del juego 
+- Piedra vence a Tijera.
+- Tijera vence a Papel.
+- Papel vence a Piedra.
+- Si ambos jugadores eligen la misma opción, la partida termina en empate.
+## 🚀 Cómo jugar
+1. Contra la computadora: El usuario elige una opción y la computadora genera una aleatoria.
+2. Multijugador: Dos jugadores ingresan sus elecciones sin mostrar en pantalla hasta revelar el resultado.
+3. Ver estadisticas: Muestra las partidas jugadas y las estadisticas acumuladas.
