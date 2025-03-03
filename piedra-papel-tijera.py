@@ -1,4 +1,5 @@
 import random
+import getpass
 
 # Variables globales
 historial = []
@@ -37,16 +38,37 @@ def menu():
 # Función para jugar contra la computadora
 def jugar_vs_computadora():
     global victorias_jugador1, victorias_computadora, empates, partidas_totales
+
+    # Solicitar el nombre del jugador
+    jugador_nombre = input("¡Hola! ¿Cuál es tu nombre? ")
+
+    # Solicitar el número de partidas
+    while True:
+        try:
+            num_partidas = int(input(f"¿Cuántas partidas desea jugar, {jugador_nombre}? "))
+            if num_partidas <= 0:
+                print("Por favor, ingresa un número mayor que 0.")
+                continue
+            break
+        except ValueError:
+            print("Por favor, ingresa un número válido.")
+
     opciones = ["piedra", "papel", "tijera"]
 
-    while True:
-        jugador = input("Elige piedra, papel o tijera: ").lower()
+    # Jugar el número de partidas especificado
+    for _ in range(num_partidas):
+        print(f"\nPartida {_ + 1} de {num_partidas}")
 
-        if jugador not in opciones:
+        # Recoger las elecciones de ambos jugadores sin mostrar aún
+        jugador = getpass.getpass(f"{jugador_nombre}, elige piedra, papel o tijera: ").lower()
+        while jugador not in opciones:
             print("Opción no válida.")
-            continue
+            jugador = getpass.getpass(f"{jugador_nombre}, elige piedra, papel o tijera: ").lower()
 
         computadora = random.choice(opciones)
+
+        # Mostrar las elecciones después de que ambos jugadores elijan
+        print(f"\n{jugador_nombre} eligió: {jugador}")
         print(f"La computadora eligió: {computadora}")
 
         if jugador == computadora:
@@ -62,48 +84,83 @@ def jugar_vs_computadora():
             victorias_computadora += 1
 
         partidas_totales += 1
-        if input("¿Jugar de nuevo? (sí/no): ").lower() != "sí":
-            break
 
-import random
-import getpass
-import time
+    # Mostrar estadísticas y el historial después de todas las partidas
+    print("\n--- Estadísticas ---")
+    print(f"Jugador: {jugador_nombre} - Ganó {victorias_jugador1} partidas, Perdió {victorias_computadora} partidas, Empató {empates} partidas")
+    print(f"Computadora: Ganó {victorias_computadora} partidas, Perdió {victorias_jugador1} partidas, Empató {empates} partidas")
 
-# Opciones del juego
-opciones = ["piedra", "papel", "tijera"]
+    print("\n--- Historial ---")
+    historial.append(f"{jugador_nombre}: Ganó {victorias_jugador1}, Perdió {victorias_computadora}, Empató {empates}")
+    for entry in historial:
+        print(entry)
 
+# Función para jugar multijugador
 def jugar_multijugador():
+    global victorias_jugador1, victorias_jugador2, empates, partidas_totales
+
     print("\n--- Modo Multijugador ---")
-    
-    # Jugador 1 elige en secreto
-    jugador1 = getpass.getpass("Jugador 1, elige piedra, papel o tijera (no se mostrará en pantalla): ").lower()
-    
-    while jugador1 not in opciones:
-        print("Opción inválida. Intenta nuevamente.")
-        jugador1 = getpass.getpass("Jugador 1, elige piedra, papel o tijera: ").lower()
 
-    print("\n" * 50)  # Limpia la pantalla simulando que el Jugador 2 no ve la elección
-    
-    # Jugador 2 elige
-    jugador2 = input("Jugador 2, elige piedra, papel o tijera: ").lower()
+    # Solicitar nombres de los jugadores
+    jugador1_nombre = input("Jugador 1, ¿cuál es tu nombre? ")
+    jugador2_nombre = input("Jugador 2, ¿cuál es tu nombre? ")
 
-    while jugador2 not in opciones:
-        print("Opción inválida. Intenta nuevamente.")
-        jugador2 = input("Jugador 2, elige piedra, papel o tijera: ").lower()
+    # Solicitar el número de partidas
+    while True:
+        try:
+            num_partidas = int(input(f"¿Cuántas partidas desea jugar, {jugador1_nombre} y {jugador2_nombre}? "))
+            if num_partidas <= 0:
+                print("Por favor, ingresa un número mayor que 0.")
+                continue
+            break
+        except ValueError:
+            print("Por favor, ingresa un número válido.")
 
-    # Mostrar las elecciones y el resultado
-    print(f"\nJugador 1 eligió: {jugador1}")
-    print(f"Jugador 2 eligió: {jugador2}")
+    opciones = ["piedra", "papel", "tijera"]
 
-    if jugador1 == jugador2:
-        print("¡Es un empate!")
-    elif (jugador1 == "piedra" and jugador2 == "tijera") or \
-         (jugador1 == "papel" and jugador2 == "piedra") or \
-         (jugador1 == "tijera" and jugador2 == "papel"):
-        print("¡Jugador 1 gana!")
-    else:
-        print("¡Jugador 2 gana!")
+    # Jugar el número de partidas especificado
+    for _ in range(num_partidas):
+        print(f"\nPartida {_ + 1} de {num_partidas}")
 
+        # Recoger las elecciones de ambos jugadores sin mostrar aún
+        jugador1 = getpass.getpass(f"{jugador1_nombre}, elige piedra, papel o tijera: ").lower()
+        while jugador1 not in opciones:
+            print("Opción no válida.")
+            jugador1 = getpass.getpass(f"{jugador1_nombre}, elige piedra, papel o tijera: ").lower()
+
+        jugador2 = getpass.getpass(f"{jugador2_nombre}, elige piedra, papel o tijera: ").lower()
+        while jugador2 not in opciones:
+            print("Opción no válida.")
+            jugador2 = getpass.getpass(f"{jugador2_nombre}, elige piedra, papel o tijera: ").lower()
+
+        # Mostrar las elecciones después de que ambos jugadores elijan
+        print(f"\n{jugador1_nombre} eligió: {jugador1}")
+        print(f"{jugador2_nombre} eligió: {jugador2}")
+
+        if jugador1 == jugador2:
+            print("¡Es un empate!")
+            empates += 1
+        elif (jugador1 == "piedra" and jugador2 == "tijera") or \
+             (jugador1 == "papel" and jugador2 == "piedra") or \
+             (jugador1 == "tijera" and jugador2 == "papel"):
+            print(f"¡{jugador1_nombre} gana!")
+            victorias_jugador1 += 1
+        else:
+            print(f"¡{jugador2_nombre} gana!")
+            victorias_jugador2 += 1
+
+        partidas_totales += 1
+
+    # Mostrar estadísticas y el historial después de todas las partidas
+    print("\n--- Estadísticas ---")
+    print(f"{jugador1_nombre}: Ganó {victorias_jugador1} partidas, Perdió {victorias_jugador2} partidas, Empató {empates} partidas")
+    print(f"{jugador2_nombre}: Ganó {victorias_jugador2} partidas, Perdió {victorias_jugador1} partidas, Empató {empates} partidas")
+
+    print("\n--- Historial ---")
+    historial.append(f"{jugador1_nombre}: Ganó {victorias_jugador1}, Perdió {victorias_jugador2}, Empató {empates}")
+    historial.append(f"{jugador2_nombre}: Ganó {victorias_jugador2}, Perdió {victorias_jugador1}, Empató {empates}")
+    for entry in historial:
+        print(entry)
 
 # Función para mostrar las estadísticas
 def mostrar_estadisticas():
